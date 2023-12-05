@@ -108,6 +108,8 @@ function soundPlay() {
     else changeMode_soundEffect();
     sounds[mode].play();
     sounds[mode].amp(1);
+    // 추가한 부분
+    // 사운드의 길이가 12가 넘지 않을 경우만 배열에 추가
     if (musicData.length < 12) musicData.push(mode)
   }
 }
