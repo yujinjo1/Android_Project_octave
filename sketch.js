@@ -1,6 +1,9 @@
 let mainMode = true;
 let mode = 0;
 let sounds = [];
+// 추가한 부분
+// 사운드의 mode를 배열에 저장
+let musicData = [];
 
 function preload() {
   soundFormats("mp3", "ogg");
@@ -12,17 +15,14 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-}
-
-function draw() {
   background(220);
   fill(255);
+  stroke(220);
   strokeWeight(windowWidth / 300);
   for (var i = 0; i < 21; i++) {
     rect(i * width / 21, height - height / 3, width / 21, height / 3, 0, 0, 10, 10);
   }
   fill(0);
-  stroke(220);
   for (var i = 0; i < 6; i++) {
     if (i % 4 != 2) {
       rect(width / 42 + i * width / 21, height - height / 3, width / 21, height / 6, 0, 0, 10, 10);
@@ -30,6 +30,17 @@ function draw() {
       rect(width / 42 + i * width / 21 + (width / 3)*2, height - height / 3, width / 21, height / 6, 0, 0, 10, 10);
     }
   }
+  // 추가한 부분
+  // 사운드 아이콘 쌓는 바
+  noStroke()
+  fill(210)
+  rect(width *0.05+3, height/5+5, width * 0.82, height/6, 40)
+  fill(230)
+  rect(width *0.05, height/5, width * 0.82, height/6, 40)
+}
+
+function draw() {
+
 }
 
 function changeMode_piano() {
@@ -97,6 +108,7 @@ function soundPlay() {
     else changeMode_soundEffect();
     sounds[mode].play();
     sounds[mode].amp(1);
+    if (musicData.length < 12) musicData.push(mode)
   }
 }
 
