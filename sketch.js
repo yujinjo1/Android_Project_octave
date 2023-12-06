@@ -1,15 +1,28 @@
 let mainMode = true;
 let mode = 0;
-let sounds = [];
+
 // 추가한 부분
-// 사운드의 mode를 배열에 저장
+// 그냥 보기 편하라고 해논거
+// 만약 effect모드라면 항상 mode에 36을 더해야 하는데 숫자 그대로 써 놓으면 지저분해서
+let if_effect = 36;
+
+let sounds = [];
 let musicData = [];
+// 추가한 부분
+// 아이콘 이미지 저장할 변수
+let iconImage = [];
 
 function preload() {
   soundFormats("mp3", "ogg");
   for (var i = 0; i < 36; i++) {
     if (i < 36) sounds[i] = loadSound(`sound/piano${i}.mp3`);
     else sounds[i] = loadSound(`sound/effect${i}.mp3`);
+  }
+  // 추가한 부분
+  // 이미지 불러와서 iconImage배열에 순서대로 저장
+  // 불러오는 파일명 수정 필요
+  for (var j = 0; j < 36; j++){
+    iconImage[j] = loadImage(`이미지폴더명/이미지이름${j}.확장자`)
   }
 }
 
@@ -30,8 +43,6 @@ function setup() {
       rect(width / 42 + i * width / 21 + (width / 3)*2, height - height / 3, width / 21, height / 6, 0, 0, 10, 10);
     }
   }
-  // 추가한 부분
-  // 사운드 아이콘 쌓는 바
   noStroke()
   fill(210)
   rect(width *0.05+3, height/5+5, width * 0.82, height/6, 40)
@@ -83,22 +94,22 @@ function changeMode_piano() {
 function changeMode_soundEffect(){
   if (mouseY > windowHeight - height / 6) {
     for (var i = 0; i < 21; i++) {
-      if (mouseX > i * width / 21 && mouseX < (i + 1) * width / 21) mode = i+36;
+      if (mouseX > i * width / 21 && mouseX < (i + 1) * width / 21) mode = i+if_effect;
     }
   }
   if (mouseY < windowHeight - height / 6) {
-    if (mouseX < width / 42) mode = 36;
-    if (mouseX > (width / 42) * 5 && mouseX < (width / 42) * 6) mode = 2+36;
-    if (mouseX > (width / 42) * 6 && mouseX < (width / 42) * 7) mode = 3+36;
-    if (mouseX > (width / 42) * 13 && mouseX < (width / 42) * 14) mode = 6+36;
-    if (mouseX > (width / 42) * 14 && mouseX < (width / 42) * 15) mode = 7+36;
-    if (mouseX > (width / 42) * 19 && mouseX < (width / 42) * 20) mode = 9+36;
-    if (mouseX > (width / 42) * 20 && mouseX < (width / 42) * 21) mode = 10+36;
-    if (mouseX > (width / 42) * 27 && mouseX < (width / 42) * 28) mode = 13+36;
-    if (mouseX > (width / 42) * 28 && mouseX < (width / 42) * 29) mode = 14+36;
-    if (mouseX > (width / 42) * 33 && mouseX < (width / 42) * 34) mode = 16+36;
-    if (mouseX > (width / 42) * 34 && mouseX < (width / 42) * 35) mode = 17+36;
-    if (mouseX > (width / 42) * 41 && mouseX < (width / 42) * 42) mode = 20+36;
+    if (mouseX < width / 42) mode = if_effect;
+    if (mouseX > (width / 42) * 5 && mouseX < (width / 42) * 6) mode = 2+if_effect;
+    if (mouseX > (width / 42) * 6 && mouseX < (width / 42) * 7) mode = 3+if_effect;
+    if (mouseX > (width / 42) * 13 && mouseX < (width / 42) * 14) mode = 6+if_effect;
+    if (mouseX > (width / 42) * 14 && mouseX < (width / 42) * 15) mode = 7+if_effect;
+    if (mouseX > (width / 42) * 19 && mouseX < (width / 42) * 20) mode = 9+if_effect;
+    if (mouseX > (width / 42) * 20 && mouseX < (width / 42) * 21) mode = 10+if_effect;
+    if (mouseX > (width / 42) * 27 && mouseX < (width / 42) * 28) mode = 13+if_effect;
+    if (mouseX > (width / 42) * 28 && mouseX < (width / 42) * 29) mode = 14+if_effect;
+    if (mouseX > (width / 42) * 33 && mouseX < (width / 42) * 34) mode = 16+if_effect;
+    if (mouseX > (width / 42) * 34 && mouseX < (width / 42) * 35) mode = 17+if_effect;
+    if (mouseX > (width / 42) * 41 && mouseX < (width / 42) * 42) mode = 20+if_effect;
   }
 }
 
@@ -108,9 +119,9 @@ function soundPlay() {
     else changeMode_soundEffect();
     sounds[mode].play();
     sounds[mode].amp(1);
-    // 추가한 부분
-    // 사운드의 길이가 12가 넘지 않을 경우만 배열에 추가
-    if (musicData.length < 12) musicData.push(mode)
+    if (musicData.length < 12){
+      musicData.push(mode)
+    }
   }
 }
 
